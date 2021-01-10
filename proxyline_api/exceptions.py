@@ -8,3 +8,6 @@ class InvalidIpVersion(Exception):
 
 class invalidCountry(Exception):
     pass
+
+class NonFieldErrors(Exception):
+    pass

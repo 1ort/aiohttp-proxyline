@@ -8,6 +8,7 @@ python:
 
 before_install:
   pip install codecov
+  pip install pytest
 
 
 install: 
@@ -15,6 +16,7 @@ install:
 
 script:
     - python setup.py install
-    - coverage run -m py.test tests --api-key=${{ secrets.PYPI_PASSWORD }}
+    - pytest tests --api-key=${{ secrets.PYPI_PASSWORD }}
+    - coverage run 
     - bash <(curl -s https://codecov.io/bash)
   
