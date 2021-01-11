@@ -16,7 +16,7 @@ install:
 
 script:
     - python setup.py install
-    - pytest tests --api-key=${{ secrets.PYPI_PASSWORD }}
-    - coverage run 
+    - pytest tests --api-key=${{ secrets.API_KEY }}
+    - coverage run
     - bash <(curl -s https://codecov.io/bash)
   
