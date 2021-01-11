@@ -11,3 +11,7 @@ class invalidCountry(Exception):
 
 class NonFieldErrors(Exception):
     pass
+
+
+class InvalidApiKey(Exception):
+    pass

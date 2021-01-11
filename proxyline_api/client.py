@@ -47,6 +47,34 @@ class ProxyLine:
         }
         return self.__requests(path, params=params)
 
+    def proxies(self, status=None, proxy_type=None, ip_version=None, country=None, date_after=None, date_before=None,
+                date_end_after=None, date_end_before=None, orders=None, format=None, limit=200, offset=None):
+        path = "proxies/"
+        params = {
+            "status": status,
+            "proxy_type":  proxy_type,
+            "ip_version": ip_version,
+            "country": country,
+            "date_after": date_after,
+            "date_before": date_before,
+            "date_end_after": date_end_after,
+            "date_end_before": date_end_before,
+            "orders": orders,
+            "format": format,
+            "limit": limit,
+            offset: offset,
+        }
+        return self.__requests(path, params=params)
+
+    def renew(self, proxy_id):
+        path = "renew/"
+
+        params = {
+            "proxy_id": proxy_id,
+            "period": 30
+        }
+        return self.__requests(path, params=params)
+
     # def sites(self):
     #     """
     #     В этой документации метод есть https://proxyline.net/api
@@ -89,4 +117,9 @@ class ProxyLine:
 
         url = "{}/{}".format(API_URL, path)
 
-        return requests.request(method, url, params=params, data=params, headers=headers).json()
+        response = requests.request(method, url, params=params, data=params, headers=headers).json()
+
+        if "detail" in response and "incorrect api key" == response["detail"]:
+            raise exceptions.InvalidApiKey()
+
+        return response
