@@ -7,7 +7,7 @@ with open("requirements.txt", "r", encoding="utf-8") as r:
 
 setuptools.setup(
     name="proxyline_api",
-    version="0.1",
+    version="0.2",
     author="daveusa31",
     packages=setuptools.find_packages(),
     include_package_data=True,
