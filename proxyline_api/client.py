@@ -36,6 +36,28 @@ class ProxyLine:
         params = self.__order_check_params(*args, **kwargs)
         return self.__requests(path, params=params, method="POST")
 
+    def countries(self):
+        path = 'countries/'
+        return self.__requests(path)
+
+    def orders(self, date_after, date_before):
+        path = 'orders/'
+        params = {
+            'date_after': date_after,
+            'date_before': date_before
+        }
+        return self.__requests(path, params=params)
+
+    def ips_count(self, proxy_type, ip_version, country):
+        self.__check_proxy_type_ip_version_available_countryes(proxy_type, ip_version, country)
+        path = "ips_count/"
+        params = {
+            "type": proxy_type,
+            "ip_version": ip_version,
+            "country": country,
+        }
+        return self.__requests(path, params=params)
+
     def ips(self, proxy_type, ip_version, country):
         self.__check_proxy_type_ip_version_available_countryes(proxy_type, ip_version, country)
 
