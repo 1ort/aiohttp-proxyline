@@ -130,12 +130,10 @@ class ProxyLine:
         headers = {
             "API-KEY": self.api_key,
         }
-
         url = "{}/{}".format(API_URL, path)
-        if method == 'GET':
-            async with session.get(url, params=params, data=params, headers=headers) as response:
-                #response = requests.request(method, url, params=params, data=params, headers=headers).json()
-                if "detail" in response and "incorrect api key" == response["detail"]:
-                    raise exceptions.InvalidApiKey()
-
-                    return response
+        async with self.session.get(url, params=params, data=params, headers=headers) if method == 'GET' else self.session.post(url, params=params, data=params, headers=headers) as response:
+            #response = requests.request(method, url, params=params, data=params, headers=headers).json()
+            result = await response.json()
+            if "detail" in result and "incorrect api key" == result["detail"]:
+                raise exceptions.InvalidApiKey()
+            return result
